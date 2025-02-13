@@ -1,35 +1,101 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
+    <main>
+      <header>
+        <a href="" className="logo">
+          MyBlog
         </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <nav>
+          <a href="">Login</a>
+          <a href="">Register</a>
+        </nav>
+      </header>
+      <div className="posts">
+        <div className="post">
+          <div className="image">
+            <img
+              src="https://ischoolonline.berkeley.edu/wp-content/uploads/sites/37/2021/01/4430_whatismachinelearning_hero.jpg"
+              alt="Machiner learning Image"
+            />
+          </div>
+          <div className="texts">
+            <h2>What Is Machine Learning? Definition, Types, Applications.</h2>
+            <div className="info">
+              <span>Praveen Kumar</span>
+              <time>2025-02-13 21:38</time>
+            </div>
+            <div className="summary">
+              Machine learning (ML) is defined as a discipline of artificial
+              intelligence (AI) that provides machines the ability to
+              automatically learn from data...
+            </div>
+          </div>
+        </div>
+        <div className="post">
+          <div className="image">
+            <img
+              src="https://ischoolonline.berkeley.edu/wp-content/uploads/sites/37/2021/01/4430_whatismachinelearning_hero.jpg"
+              alt="Machiner learning Image"
+            />
+          </div>
+          <div className="texts">
+            <h2>What Is Machine Learning? Definition, Types, Applications.</h2>
+            <div className="info">
+              <span>Praveen Kumar</span>
+              <time>2025-02-13 21:38</time>
+            </div>
+            <div className="summary">
+              Machine learning (ML) is defined as a discipline of artificial
+              intelligence (AI) that provides machines the ability to
+              automatically learn from data...
+            </div>
+          </div>
+        </div>
+        <div className="post">
+          <div className="image">
+            <img
+              src="https://ischoolonline.berkeley.edu/wp-content/uploads/sites/37/2021/01/4430_whatismachinelearning_hero.jpg"
+              alt="Machiner learning Image"
+            />
+          </div>
+          <div className="texts">
+            <h2>What Is Machine Learning? Definition, Types, Applications.</h2>
+            <div className="info">
+              <span>Praveen Kumar</span>
+              <time>2025-02-13 21:38</time>
+            </div>
+            <div className="summary">
+              Machine learning (ML) is defined as a discipline of artificial
+              intelligence (AI) that provides machines the ability to
+              automatically learn from data...
+            </div>
+          </div>
+        </div>
+        <div className="post">
+          <div className="image">
+            <img
+              src="https://ischoolonline.berkeley.edu/wp-content/uploads/sites/37/2021/01/4430_whatismachinelearning_hero.jpg"
+              alt="Machiner learning Image"
+            />
+          </div>
+          <div className="texts">
+            <h2>What Is Machine Learning? Definition, Types, Applications.</h2>
+            <div className="info">
+              <span>Praveen Kumar</span>
+              <time>2025-02-13 21:38</time>
+            </div>
+            <div className="summary">
+              Machine learning (ML) is defined as a discipline of artificial
+              intelligence (AI) that provides machines the ability to
+              automatically learn from data...
+            </div>
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </main>
+  );
 }
 
-export default App
+export default App;
