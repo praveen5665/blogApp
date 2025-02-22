@@ -1,4 +1,3 @@
-
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +5,8 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
   line-height: 1.6;
   background-color: #f8f9fa;
   color: #333;
@@ -289,7 +289,7 @@ time {
 }
 
 .notification-popup.success .notification-content {
-  background-color: #4CAF50;
+  background-color: #4caf50;
 }
 
 .notification-popup.error .notification-content {
@@ -331,12 +331,9 @@ time {
     left: 10px;
     width: calc(100% - 20px);
   }
-  
+
   .notification-content {
     min-width: auto;
     width: 100%;
   }
 }
-
-
-

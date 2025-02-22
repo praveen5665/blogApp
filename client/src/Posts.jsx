@@ -1,12 +1,12 @@
-import React from 'react'
-import Post from './components/Post'
+import React from "react";
+import Post from "./components/Post";
 
 const Posts = () => {
   return (
-    <div className='posts'>
-        <Post />
+    <div className="posts">
+      <Post />
     </div>
-  )
-}
+  );
+};
 
-export default Posts
+export default Posts;

@@ -6,12 +6,17 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 dotenv.config();
+import cookieParser from "cookie-parser";
+import multer from 'multer';
+const uploadMiddleware = multer({ dest: 'uploads/' });
+import fs from 'fs';
 
 
 const app = express();
 
 app.use(cors({credentials:true, origin:'http://localhost:5173'}));    
 app.use(express.json());
+app.use(cookieParser())
 
 mongoose.connect('mongodb://localhost:27017/blogApp').then(() => console.log('Connected to MongoDB'))
 .catch(error => console.error('Could not connect to MongoDB', err));
@@ -57,13 +62,45 @@ app.post('/register', async (req, res) => {
       }
     
      const token = jwt.sign({username, id:user._id}, process.env.SECRET);
-     res.cookie('token',token);
-    res.json({ message: "Login successful" });
+     res.cookie('token',token).json({
+      id:user._id,
+      username,
+      message: "Login successful" 
+     });
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
   });
   
+  app.get('/profile', (req, res) => {
+    const { token } = req.cookies;
+    if (!token) {
+      return res.status(401).json({ error: "No token provided" });
+    }
+    
+    try {
+      const decoded = jwt.verify(token, process.env.SECRET);
+      res.json({
+          userInfo : {username: decoded.username}
+      });
+    } catch (err) {
+      res.status(401).json({ error: "Invalid token" });
+    }
+  });
+  
+
+app.post('/logout', (req,res) => {
+  res.cookie('token',"").json('ok')
+})
+
+app.post('/post',uploadMiddleware.single('file'), (req, res) => {
+  const {originalname} = req.file;
+  const parts = originalname.split('.');
+  const ext = parts[parts.length - 1];
+  const newPath = path + '.' + ext;
+  fs.renameSync(path, newPath);
+  res.json({ext});
+})
 
 app.listen(Port, () => {
     console.log(`app is listening on Port : ${Port}`);

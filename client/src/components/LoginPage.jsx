@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link, Navigate } from 'react-router-dom'
+import { UserContext } from '../UserContext'
 
 const LoginPage = () => {
   const [username, setUsername] = useState('')
@@ -8,6 +9,7 @@ const LoginPage = () => {
   const [showNotification, setShowNotification] = useState(false)
   const [notificationType, setNotificationType] = useState('error')
   const [notificationMessage, setNotificationMessage] = useState('')
+  const {setUserInfo} = useContext(UserContext);
 
   const Notification = ({ type, message, onClose }) => {
     return (
@@ -31,6 +33,9 @@ const LoginPage = () => {
       })
       
       if (response.ok) {
+        response.json().then(userInfo => {
+          setUserInfo(userInfo);
+        })
         setRedirect(true)
       } else {
         const errorData = await response.json()
@@ -52,7 +57,7 @@ const LoginPage = () => {
     if (showNotification) {
       const timer = setTimeout(() => {
         setShowNotification(false)
-      }, 5000)
+      }, 3000)
       return () => clearTimeout(timer)
     }
   }, [showNotification])
