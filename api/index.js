@@ -10,13 +10,18 @@ import cookieParser from "cookie-parser";
 import multer from 'multer';
 const uploadMiddleware = multer({ dest: 'uploads/' });
 import fs from 'fs';
+import Post from "./models/Post.js";
+import { fileURLToPath } from 'url';
+import path from 'path';
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 const app = express();
 
 app.use(cors({credentials:true, origin:'http://localhost:5173'}));    
 app.use(express.json());
-app.use(cookieParser())
+app.use(cookieParser());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 mongoose.connect('mongodb://localhost:27017/blogApp').then(() => console.log('Connected to MongoDB'))
 .catch(error => console.error('Could not connect to MongoDB', err));
@@ -92,16 +97,43 @@ app.post('/register', async (req, res) => {
 app.post('/logout', (req,res) => {
   res.cookie('token',"").json('ok')
 })
+app.post('/post', uploadMiddleware.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' });
+    }
 
-app.post('/post',uploadMiddleware.single('file'), (req, res) => {
-  const {originalname} = req.file;
-  const parts = originalname.split('.');
-  const ext = parts[parts.length - 1];
-  const newPath = path + '.' + ext;
-  fs.renameSync(path, newPath);
-  res.json({ext});
+    const {originalname, path: filePath} = req.file;
+    const parts = originalname.split('.');
+    const ext = parts[parts.length - 1];
+    const newPath = filePath + '.' + ext;
+    fs.renameSync(filePath, newPath);
+
+    const { token } = req.cookies;
+    if (!token) {
+      return res.status(401).json({ error: "No token provided" });
+    }
+    const decoded = jwt.verify(token, process.env.SECRET);
+    const {title, summary, content} = req.body;
+    const postDoc = await Post.create({
+      title,
+      summary,
+      content,
+      cover: newPath,
+      author: decoded.id
+    });
+
+    res.json(postDoc);
+  } catch (error) {
+    console.error('Error:', error); 
+    res.status(500).json({ error: 'Error creating post' });
+  }
+});
+
+app.get('/post', async (req, res) => {
+  const posts = await Post.find().populate('author', ['username']).sort({createdAt: -1}).limit(20);
+  res.json(posts);
 })
-
 app.listen(Port, () => {
     console.log(`app is listening on Port : ${Port}`);
 })

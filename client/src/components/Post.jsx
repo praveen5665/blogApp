@@ -1,24 +1,36 @@
 import React from 'react'
+import { formatISO9075 } from 'date-fns';
+import {Link} from 'react-router-dom'
 
-const Post = () => {
+const Post = ({_id, title, summary, cover, content, createdAt,author}) => {
   return (
     <div className="post">
-          <div className="image">
-            <img
-              src="https://ischoolonline.berkeley.edu/wp-content/uploads/sites/37/2021/01/4430_whatismachinelearning_hero.jpg"
-              alt="Machiner learning Image"
-            />
-          </div>
+      <Link to={`/post/${_id}`}>
+      <div className="image">
+            {cover ? (
+              <img src={'http://localhost:4000/'+cover} alt="Post Cover" />
+            ) : (
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '100%',
+                height: '200px', 
+                backgroundColor: '#f0f0f0', 
+              }}>{title}</div>
+            )}
+          </div>  
+      </Link>
           <div className="texts">
-            <h2>What Is Machine Learning? Definition, Types, Applications.</h2>
+            <Link to={`/post/${_id}`}>
+              <h2>{title}</h2>
+            </Link>
             <div className="info">
-            <div className="author">Praveen Kumar</div>
-              <time>2025-02-13 21:38</time>
+            <div className="author">{author ? author.username : 'Unknown Author'}</div>
+              <time>{formatISO9075(new Date(createdAt))}</time>
             </div>
             <div className="summary">
-              Machine learning (ML) is defined as a discipline of artificial
-              intelligence (AI) that provides machines the ability to
-              automatically learn from data...
+              {summary}
             </div>
           </div>
         </div>

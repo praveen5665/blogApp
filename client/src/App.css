@@ -93,12 +93,18 @@ nav a:hover {
   transform: scale(1.05);
 }
 
+div.post div.texts a {
+  text-decoration: none;
+  color: inherit;
+}
 .texts {
+  text-decoration: none;
   padding: 1.5rem;
 }
 
 h2 {
   font-size: 1.4rem;
+  text-decoration: none;
   margin-bottom: 1rem;
   color: #2d3436;
   line-height: 1.3;
